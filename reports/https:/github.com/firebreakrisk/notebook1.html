@@ -1,0 +1,356 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Wildfire Risk Assessment Report</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            h1, h2, h3 {
+                color: #2c3e50;
+            }
+            .summary-box {
+                background-color: #f8f9fa;
+                border: 1px solid #dee2e6;
+                border-radius: 4px;
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            .summary-stats {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            .stat-card {
+                flex: 1;
+                min-width: 200px;
+                background-color: white;
+                border: 1px solid #dee2e6;
+                border-radius: 4px;
+                margin: 10px;
+                padding: 15px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .stat-card h3 {
+                margin-top: 0;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 10px;
+            }
+            .category-bar {
+                height: 20px;
+                background-color: #007bff;
+                margin-bottom: 5px;
+                border-radius: 2px;
+            }
+            .risk-indicator {
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                margin-right: 8px;
+                vertical-align: middle;
+            }
+            .image-card {
+                background-color: white;
+                border: 1px solid #dee2e6;
+                border-radius: 4px;
+                margin-bottom: 20px;
+                overflow: hidden;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .image-header {
+                background-color: #f1f1f1;
+                padding: 12px 15px;
+                border-bottom: 1px solid #dee2e6;
+            }
+            .image-body {
+                padding: 15px;
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .image-preview {
+                flex: 1;
+                min-width: 300px;
+                max-width: 400px;
+                margin-right: 20px;
+            }
+            .image-preview img {
+                max-width: 100%;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+            .assessment-list {
+                flex: 2;
+                min-width: 300px;
+            }
+            .assessment-item {
+                background-color: #f8f9fa;
+                border: 1px solid #dee2e6;
+                border-radius: 4px;
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+            .score-0 { background-color: #4CAF50; color: white; }
+            .score-1 { background-color: #FFEB3B; }
+            .score-2 { background-color: #FF9800; color: white; }
+            .score-3 { background-color: #F44336; color: white; }
+            .features-list {
+                margin-top: 10px;
+                padding-left: 20px;
+            }
+            .feature-item {
+                margin-bottom: 5px;
+            }
+            .recommendations {
+                margin-top: 10px;
+                padding: 10px;
+                background-color: #e8f4f8;
+                border-radius: 4px;
+            }
+            .recommendations ul {
+                margin: 5px 0;
+                padding-left: 25px;
+            }
+            .error-card {
+                background-color: #ffebee;
+                color: #c62828;
+                padding: 15px;
+                border-radius: 4px;
+                margin-bottom: 20px;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 15px;
+            }
+            th, td {
+                padding: 8px 12px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+            th {
+                background-color: #f1f1f1;
+            }
+            .timestamp {
+                color: #6c757d;
+                font-size: 0.9em;
+                margin-top: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Wildfire Risk Assessment Report</h1>
+        <p class="timestamp">Generated on 2025-03-30 15:47:34</p>
+        
+        <div class="summary-box">
+            <h2>Summary</h2>
+            <p>Processed <strong>3</strong> images: <strong>3</strong> successfully analyzed, <strong>0</strong> failed.</p>
+            
+            <div class="summary-stats">
+                <div class="stat-card">
+                    <h3>Risk Levels</h3>
+                    <table>
+                        <tr>
+                            <th>Risk Level</th>
+                            <th>Count</th>
+                            <th>Percentage</th>
+                        </tr>
+    
+                        <tr>
+                            <td><span class="risk-indicator" style="background-color: #4CAF50;"></span>Level 0</td>
+                            <td>0</td>
+                            <td>0.0%</td>
+                        </tr>
+        
+                        <tr>
+                            <td><span class="risk-indicator" style="background-color: #FFEB3B;"></span>Level 1</td>
+                            <td>1</td>
+                            <td>100.0%</td>
+                        </tr>
+        
+                        <tr>
+                            <td><span class="risk-indicator" style="background-color: #FF9800;"></span>Level 2</td>
+                            <td>0</td>
+                            <td>0.0%</td>
+                        </tr>
+        
+                        <tr>
+                            <td><span class="risk-indicator" style="background-color: #F44336;"></span>Level 3</td>
+                            <td>0</td>
+                            <td>0.0%</td>
+                        </tr>
+        
+                    </table>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Categories Detected</h3>
+                    <table>
+                        <tr>
+                            <th>Category</th>
+                            <th>Count</th>
+                        </tr>
+    
+                        <tr>
+                            <td>roofLitter</td>
+                            <td>1</td>
+                        </tr>
+        
+                        <tr>
+                            <td>vegetationOvergrowth</td>
+                            <td>1</td>
+                        </tr>
+        
+                        <tr>
+                            <td>openEaves</td>
+                            <td>1</td>
+                        </tr>
+        
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Detailed Results</h2>
+    
+        <div class="image-card">
+            <div class="image-header">
+                <h3>litter.jpeg</h3>
+                <small>https://fb-risk-photos.s3.amazonaws.com/photos/litter.jpeg</small>
+            </div>
+            <div class="image-body">
+                <div class="image-preview">
+                    <img src="https://fb-risk-photos.s3.amazonaws.com/photos/litter.jpeg" alt="litter.jpeg" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'300\' height=\'200\' fill=\'%23f1f1f1\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23999\'>Image Not Available</text></svg>'; this.style.width='300px';">
+                </div>
+                <div class="assessment-list">
+        
+                    <div class="assessment-item">
+                        <h4 class="score-1">
+                            roofLitter - Risk Level 1 (RB1)
+                        </h4>
+                        <p>Confidence: 92.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">accumulated debris on roof (87.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Clear accumulated roof debris</li>
+                            
+                            <li>Inspect roof patches and ensure no missing shingles</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-header">
+                <h3>vegetation.jpeg</h3>
+                <small>https://fb-risk-photos.s3.amazonaws.com/photos/vegetation.jpeg</small>
+            </div>
+            <div class="image-body">
+                <div class="image-preview">
+                    <img src="https://fb-risk-photos.s3.amazonaws.com/photos/vegetation.jpeg" alt="vegetation.jpeg" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'300\' height=\'200\' fill=\'%23f1f1f1\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23999\'>Image Not Available</text></svg>'; this.style.width='300px';">
+                </div>
+                <div class="assessment-list">
+        
+                    <div class="assessment-item">
+                        <h4 class="score-0.85">
+                            vegetationOvergrowth - Risk Level 0.85 (WV1)
+                        </h4>
+                        <p>Confidence: 95.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">dense dry vegetation surrounding property (92.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Clear excessive dry vegetation</li>
+                            
+                            <li>Maintain proper vegetation clearance around structures</li>
+                            
+                            <li>Regularly trim overgrown vegetation to reduce wildfire propagation risk</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-header">
+                <h3>openeaves.jpeg</h3>
+                <small>https://fb-risk-photos.s3.amazonaws.com/photos/openeaves.jpeg</small>
+            </div>
+            <div class="image-body">
+                <div class="image-preview">
+                    <img src="https://fb-risk-photos.s3.amazonaws.com/photos/openeaves.jpeg" alt="openeaves.jpeg" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'300\' height=\'200\' fill=\'%23f1f1f1\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23999\'>Image Not Available</text></svg>'; this.style.width='300px';">
+                </div>
+                <div class="assessment-list">
+        
+                    <div class="assessment-item">
+                        <h4 class="score-0.85">
+                            openEaves - Risk Level 0.85 (OE1)
+                        </h4>
+                        <p>Confidence: 92.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">exposed open eaves allowing potential ember entry (92.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Install protective mesh or screens over open eaves</li>
+                            
+                            <li>Regularly inspect and repair any damaged eave coverings</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </body>
+    </html>
