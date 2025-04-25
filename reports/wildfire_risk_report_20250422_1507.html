@@ -1,0 +1,1156 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Wildfire Risk Assessment Report</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            h1, h2, h3 {
+                color: #2c3e50;
+            }
+            .summary-box {
+                background-color: #f8f9fa;
+                border: 1px solid #dee2e6;
+                border-radius: 4px;
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            .summary-stats {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            .stat-card {
+                flex: 1;
+                min-width: 200px;
+                background-color: white;
+                border: 1px solid #dee2e6;
+                border-radius: 4px;
+                margin: 10px;
+                padding: 15px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .stat-card h3 {
+                margin-top: 0;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 10px;
+            }
+            .category-bar {
+                height: 20px;
+                background-color: #007bff;
+                margin-bottom: 5px;
+                border-radius: 2px;
+            }
+            .risk-indicator {
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                margin-right: 8px;
+                vertical-align: middle;
+            }
+            .image-card {
+                background-color: white;
+                border: 1px solid #dee2e6;
+                border-radius: 4px;
+                margin-bottom: 20px;
+                overflow: hidden;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .image-header {
+                background-color: #f1f1f1;
+                padding: 12px 15px;
+                border-bottom: 1px solid #dee2e6;
+            }
+            .image-body {
+                padding: 15px;
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .image-preview {
+                flex: 1;
+                min-width: 300px;
+                max-width: 400px;
+                margin-right: 20px;
+            }
+            .image-preview img {
+                max-width: 100%;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+            .assessment-list {
+                flex: 2;
+                min-width: 300px;
+            }
+            .assessment-item {
+                background-color: #f8f9fa;
+                border: 1px solid #dee2e6;
+                border-radius: 4px;
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+            .score-0 { background-color: #4CAF50; color: white; }
+            .score-1 { background-color: #FFEB3B; }
+            .score-2 { background-color: #FF9800; color: white; }
+            .score-3 { background-color: #F44336; color: white; }
+            .features-list {
+                margin-top: 10px;
+                padding-left: 20px;
+            }
+            .feature-item {
+                margin-bottom: 5px;
+            }
+            .recommendations {
+                margin-top: 10px;
+                padding: 10px;
+                background-color: #e8f4f8;
+                border-radius: 4px;
+            }
+            .recommendations ul {
+                margin: 5px 0;
+                padding-left: 25px;
+            }
+            .error-card {
+                background-color: #ffebee;
+                color: #c62828;
+                padding: 15px;
+                border-radius: 4px;
+                margin-bottom: 20px;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 15px;
+            }
+            th, td {
+                padding: 8px 12px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+            th {
+                background-color: #f1f1f1;
+            }
+            .timestamp {
+                color: #6c757d;
+                font-size: 0.9em;
+                margin-top: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Wildfire Risk Assessment Report</h1>
+        <p class="timestamp">Generated on 2025-04-22 15:07:58</p>
+        
+        <div class="summary-box">
+            <h2>Summary</h2>
+            <p>Processed <strong>13</strong> images: <strong>13</strong> successfully analyzed, <strong>0</strong> failed.</p>
+            
+            <div class="summary-stats">
+                <div class="stat-card">
+                    <h3>Risk Levels</h3>
+                    <table>
+                        <tr>
+                            <th>Risk Level</th>
+                            <th>Count</th>
+                            <th>Percentage</th>
+                        </tr>
+    
+                        <tr>
+                            <td><span class="risk-indicator" style="background-color: #4CAF50;"></span>Level 0</td>
+                            <td>0</td>
+                            <td>0.0%</td>
+                        </tr>
+        
+                        <tr>
+                            <td><span class="risk-indicator" style="background-color: #FFEB3B;"></span>Level 1</td>
+                            <td>15</td>
+                            <td>62.5%</td>
+                        </tr>
+        
+                        <tr>
+                            <td><span class="risk-indicator" style="background-color: #FF9800;"></span>Level 2</td>
+                            <td>9</td>
+                            <td>37.5%</td>
+                        </tr>
+        
+                        <tr>
+                            <td><span class="risk-indicator" style="background-color: #F44336;"></span>Level 3</td>
+                            <td>0</td>
+                            <td>0.0%</td>
+                        </tr>
+        
+                    </table>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Categories Detected</h3>
+                    <table>
+                        <tr>
+                            <th>Category</th>
+                            <th>Count</th>
+                        </tr>
+    
+                        <tr>
+                            <td>roofLitter</td>
+                            <td>8</td>
+                        </tr>
+        
+                        <tr>
+                            <td>gutter</td>
+                            <td>6</td>
+                        </tr>
+        
+                        <tr>
+                            <td>unknown</td>
+                            <td>5</td>
+                        </tr>
+        
+                        <tr>
+                            <td>ventilation</td>
+                            <td>2</td>
+                        </tr>
+        
+                        <tr>
+                            <td>chimneys</td>
+                            <td>2</td>
+                        </tr>
+        
+                        <tr>
+                            <td>surfaceLitter</td>
+                            <td>2</td>
+                        </tr>
+        
+                        <tr>
+                            <td>combustibleFurniture</td>
+                            <td>1</td>
+                        </tr>
+        
+                        <tr>
+                            <td>vents</td>
+                            <td>1</td>
+                        </tr>
+        
+                        <tr>
+                            <td>gutterDebris</td>
+                            <td>1</td>
+                        </tr>
+        
+                        <tr>
+                            <td>vent</td>
+                            <td>1</td>
+                        </tr>
+        
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Detailed Results</h2>
+    
+        <div class="image-card">
+            <div class="image-header">
+                <h3>IMG_1253.JPG</h3>
+                <small>https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1253.JPG</small>
+            </div>
+            <div class="image-body">
+                <div class="image-preview">
+                    <img src="https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1253.JPG" alt="IMG_1253.JPG" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'300\' height=\'200\' fill=\'%23f1f1f1\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23999\'>Image Not Available</text></svg>'; this.style.width='300px';">
+                </div>
+                <div class="assessment-list">
+        
+                    <div class="assessment-item">
+                        <h4 class="score-1">
+                            roofLitter - Risk Level 1 (RB1)
+                        </h4>
+                        <p>Confidence: 92.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris accumulation on roof (87.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Clear accumulated roof debris</li>
+                            
+                            <li>Inspect roof patches and ensure no missing shingles</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="assessment-item">
+                        <h4 class="score-2">
+                            gutter - Risk Level 2 (RB2)
+                        </h4>
+                        <p>Confidence: 85.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris accumulation in gutters (80.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Regularly clear gutters of leaf litter and debris</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="assessment-item">
+                        <h4 class="score-1">
+                            combustibleFurniture - Risk Level 1 (FB2)
+                        </h4>
+                        <p>Confidence: 78.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">outdoor furniture close to the home (75.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Move furniture and planters at least 5 feet away from the home</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-header">
+                <h3>IMG_1254.JPG</h3>
+                <small>https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1254.JPG</small>
+            </div>
+            <div class="image-body">
+                <div class="image-preview">
+                    <img src="https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1254.JPG" alt="IMG_1254.JPG" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'300\' height=\'200\' fill=\'%23f1f1f1\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23999\'>Image Not Available</text></svg>'; this.style.width='300px';">
+                </div>
+                <div class="assessment-list">
+        
+                    <div class="assessment-item">
+                        <h4 class="score-1">
+                            roofLitter - Risk Level 1 (RB1)
+                        </h4>
+                        <p>Confidence: 92.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris accumulation on roof (87.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Clear accumulated roof debris.</li>
+                            
+                            <li>Ensure all roof patches are in good condition.</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="assessment-item">
+                        <h4 class="score-2">
+                            gutter - Risk Level 2 (RC2)
+                        </h4>
+                        <p>Confidence: 88.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris accumulation in gutter (85.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Regularly clear dead leaves and needles from gutters.</li>
+                            
+                            <li>Consider installing leaf filters.</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="assessment-item">
+                        <h4 class="score-1">
+                            ventilation - Risk Level 1 (CC2)
+                        </h4>
+                        <p>Confidence: 80.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris around vent openings (82.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Regularly remove debris and nests from vent areas.</li>
+                            
+                            <li>Install non-combustible mesh over vent openings.</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-header">
+                <h3>IMG_1255.JPG</h3>
+                <small>https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1255.JPG</small>
+            </div>
+            <div class="image-body">
+                <div class="image-preview">
+                    <img src="https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1255.JPG" alt="IMG_1255.JPG" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'300\' height=\'200\' fill=\'%23f1f1f1\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23999\'>Image Not Available</text></svg>'; this.style.width='300px';">
+                </div>
+                <div class="assessment-list">
+        
+                    <div class="assessment-item">
+                        <h4 class="">
+                            Unknown - Risk Level None ()
+                        </h4>
+                        <p>Confidence: 0.0%</p>
+                    
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-header">
+                <h3>IMG_1256.JPG</h3>
+                <small>https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1256.JPG</small>
+            </div>
+            <div class="image-body">
+                <div class="image-preview">
+                    <img src="https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1256.JPG" alt="IMG_1256.JPG" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'300\' height=\'200\' fill=\'%23f1f1f1\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23999\'>Image Not Available</text></svg>'; this.style.width='300px';">
+                </div>
+                <div class="assessment-list">
+        
+                    <div class="assessment-item">
+                        <h4 class="">
+                            Unknown - Risk Level None ()
+                        </h4>
+                        <p>Confidence: 0.0%</p>
+                    
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-header">
+                <h3>IMG_1258.JPG</h3>
+                <small>https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1258.JPG</small>
+            </div>
+            <div class="image-body">
+                <div class="image-preview">
+                    <img src="https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1258.JPG" alt="IMG_1258.JPG" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'300\' height=\'200\' fill=\'%23f1f1f1\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23999\'>Image Not Available</text></svg>'; this.style.width='300px';">
+                </div>
+                <div class="assessment-list">
+        
+                    <div class="assessment-item">
+                        <h4 class="">
+                            Unknown - Risk Level None ()
+                        </h4>
+                        <p>Confidence: 0.0%</p>
+                    
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-header">
+                <h3>IMG_1259.JPG</h3>
+                <small>https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1259.JPG</small>
+            </div>
+            <div class="image-body">
+                <div class="image-preview">
+                    <img src="https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1259.JPG" alt="IMG_1259.JPG" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'300\' height=\'200\' fill=\'%23f1f1f1\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23999\'>Image Not Available</text></svg>'; this.style.width='300px';">
+                </div>
+                <div class="assessment-list">
+        
+                    <div class="assessment-item">
+                        <h4 class="score-1">
+                            roofLitter - Risk Level 1 (RB1)
+                        </h4>
+                        <p>Confidence: 95.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris accumulation on roof (92.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Clear accumulated roof debris</li>
+                            
+                            <li>Inspect roof patches for integrity and missing shingles</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="assessment-item">
+                        <h4 class="score-2">
+                            gutter - Risk Level 2 (RC2)
+                        </h4>
+                        <p>Confidence: 90.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris accumulation in gutters (88.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Regularly clear debris from gutters to prevent fire hazards</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="assessment-item">
+                        <h4 class="score-2">
+                            chimneys - Risk Level 2 (CC1)
+                        </h4>
+                        <p>Confidence: 85.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris around chimney (82.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Clear debris around the chimney regularly</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="assessment-item">
+                        <h4 class="score-2">
+                            vents - Risk Level 2 (CC2)
+                        </h4>
+                        <p>Confidence: 80.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris obstructing vents (80.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Regularly check and clear vents to prevent embers from entering</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-header">
+                <h3>IMG_1260.JPG</h3>
+                <small>https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1260.JPG</small>
+            </div>
+            <div class="image-body">
+                <div class="image-preview">
+                    <img src="https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1260.JPG" alt="IMG_1260.JPG" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'300\' height=\'200\' fill=\'%23f1f1f1\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23999\'>Image Not Available</text></svg>'; this.style.width='300px';">
+                </div>
+                <div class="assessment-list">
+        
+                    <div class="assessment-item">
+                        <h4 class="score-1">
+                            roofLitter - Risk Level 1 (RB1)
+                        </h4>
+                        <p>Confidence: 92.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris accumulation on roof (87.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Clear accumulated roof debris</li>
+                            
+                            <li>Inspect roof patches and ensure no missing shingles</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="assessment-item">
+                        <h4 class="score-1">
+                            gutter - Risk Level 1 (RB2)
+                        </h4>
+                        <p>Confidence: 85.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris present in gutters (80.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Regularly clear gutters to prevent blockage</li>
+                            
+                            <li>Install leaf filters in gutters if applicable</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="assessment-item">
+                        <h4 class="score-1">
+                            chimneys - Risk Level 1 (CC1)
+                        </h4>
+                        <p>Confidence: 88.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">dry debris around chimney (82.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Keep surrounding area clear of debris</li>
+                            
+                            <li>Install an appropriate spark arrestor</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-header">
+                <h3>IMG_1262.JPG</h3>
+                <small>https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1262.JPG</small>
+            </div>
+            <div class="image-body">
+                <div class="image-preview">
+                    <img src="https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1262.JPG" alt="IMG_1262.JPG" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'300\' height=\'200\' fill=\'%23f1f1f1\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23999\'>Image Not Available</text></svg>'; this.style.width='300px';">
+                </div>
+                <div class="assessment-list">
+        
+                    <div class="assessment-item">
+                        <h4 class="score-1">
+                            roofLitter - Risk Level 1 (RB1)
+                        </h4>
+                        <p>Confidence: 92.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris accumulation on roof (87.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Clear accumulated roof debris</li>
+                            
+                            <li>Inspect roof patches and ensure no missing shingles</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="assessment-item">
+                        <h4 class="score-1">
+                            gutter - Risk Level 1 (RB2)
+                        </h4>
+                        <p>Confidence: 85.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris accumulation in gutters (82.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Regularly clean gutters to prevent fire hazards</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="assessment-item">
+                        <h4 class="score-1">
+                            ventilation - Risk Level 1 (VC1)
+                        </h4>
+                        <p>Confidence: 78.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">open vents exposed to embers (75.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Install mesh screens over vents to prevent ember entry</li>
+                            
+                            <li>Regularly check and clean vents</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-header">
+                <h3>IMG_1263.JPG</h3>
+                <small>https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1263.JPG</small>
+            </div>
+            <div class="image-body">
+                <div class="image-preview">
+                    <img src="https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1263.JPG" alt="IMG_1263.JPG" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'300\' height=\'200\' fill=\'%23f1f1f1\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23999\'>Image Not Available</text></svg>'; this.style.width='300px';">
+                </div>
+                <div class="assessment-list">
+        
+                    <div class="assessment-item">
+                        <h4 class="score-1">
+                            roofLitter - Risk Level 1 (RB1)
+                        </h4>
+                        <p>Confidence: 92.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris accumulation on roof (87.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Clear accumulated roof debris</li>
+                            
+                            <li>Inspect roof patches and ensure no missing shingles</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="assessment-item">
+                        <h4 class="score-1">
+                            surfaceLitter - Risk Level 1 (PC3)
+                        </h4>
+                        <p>Confidence: 89.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">surface litter including twigs and dry leaves (85.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Maintain cleanliness of area by removing surface litter continually</li>
+                            
+                            <li>Create non-combustible pathways</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-header">
+                <h3>IMG_1264.JPG</h3>
+                <small>https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1264.JPG</small>
+            </div>
+            <div class="image-body">
+                <div class="image-preview">
+                    <img src="https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1264.JPG" alt="IMG_1264.JPG" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'300\' height=\'200\' fill=\'%23f1f1f1\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23999\'>Image Not Available</text></svg>'; this.style.width='300px';">
+                </div>
+                <div class="assessment-list">
+        
+                    <div class="assessment-item">
+                        <h4 class="score-2">
+                            roofLitter - Risk Level 2 (RB1)
+                        </h4>
+                        <p>Confidence: 88.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris accumulation on roof (90.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Clear accumulated roof debris</li>
+                            
+                            <li>Inspect roof patches for damage</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="assessment-item">
+                        <h4 class="score-2">
+                            gutterDebris - Risk Level 2 (RG2)
+                        </h4>
+                        <p>Confidence: 85.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris accumulation in gutters (85.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Regularly clean gutters</li>
+                            
+                            <li>Install gutter guards to reduce debris accumulation</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="assessment-item">
+                        <h4 class="score-1">
+                            surfaceLitter - Risk Level 1 (SC3)
+                        </h4>
+                        <p>Confidence: 80.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">excessive surface litter accumulation (80.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Clear surface litter within 30 feet of the property</li>
+                            
+                            <li>Create a fuel break using non-combustible materials</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-header">
+                <h3>IMG_1265.JPG</h3>
+                <small>https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1265.JPG</small>
+            </div>
+            <div class="image-body">
+                <div class="image-preview">
+                    <img src="https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1265.JPG" alt="IMG_1265.JPG" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'300\' height=\'200\' fill=\'%23f1f1f1\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23999\'>Image Not Available</text></svg>'; this.style.width='300px';">
+                </div>
+                <div class="assessment-list">
+        
+                    <div class="assessment-item">
+                        <h4 class="">
+                            Unknown - Risk Level None ()
+                        </h4>
+                        <p>Confidence: 0.0%</p>
+                    
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-header">
+                <h3>IMG_1266.JPG</h3>
+                <small>https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1266.JPG</small>
+            </div>
+            <div class="image-body">
+                <div class="image-preview">
+                    <img src="https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1266.JPG" alt="IMG_1266.JPG" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'300\' height=\'200\' fill=\'%23f1f1f1\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23999\'>Image Not Available</text></svg>'; this.style.width='300px';">
+                </div>
+                <div class="assessment-list">
+        
+                    <div class="assessment-item">
+                        <h4 class="">
+                            Unknown - Risk Level None ()
+                        </h4>
+                        <p>Confidence: 0.0%</p>
+                    
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-header">
+                <h3>IMG_1267.JPG</h3>
+                <small>https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1267.JPG</small>
+            </div>
+            <div class="image-body">
+                <div class="image-preview">
+                    <img src="https://fb-risk-photos.s3.amazonaws.com/photos/IMG_1267.JPG" alt="IMG_1267.JPG" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'300\' height=\'200\' fill=\'%23f1f1f1\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-family=\'Arial\' font-size=\'16\' fill=\'%23999\'>Image Not Available</text></svg>'; this.style.width='300px';">
+                </div>
+                <div class="assessment-list">
+        
+                    <div class="assessment-item">
+                        <h4 class="score-1">
+                            roofLitter - Risk Level 1 (RB1)
+                        </h4>
+                        <p>Confidence: 92.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris accumulation on roof (87.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Clear accumulated roof debris</li>
+                            
+                            <li>Inspect roof patches and ensure no missing shingles</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="assessment-item">
+                        <h4 class="score-2">
+                            gutter - Risk Level 2 (RC2)
+                        </h4>
+                        <p>Confidence: 85.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">debris accumulation in gutters (80.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Regularly clear leaves and needles from gutters</li>
+                            
+                            <li>Consider installing leaf filters to prevent accumulation</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="assessment-item">
+                        <h4 class="score-2">
+                            vent - Risk Level 2 (CC2)
+                        </h4>
+                        <p>Confidence: 80.0%</p>
+                    
+                        <div class="features-list">
+                            <strong>Detected Features:</strong>
+                            <ul>
+                        
+                            <li class="feature-item">accumulated debris around vents (75.0% confidence)</li>
+                            
+                            </ul>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <strong>Recommendations:</strong>
+                            <ul>
+                        
+                            <li>Regularly remove debris and nests from vents</li>
+                            
+                            <li>Consider installing non-combustible screens over vents</li>
+                            
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </body>
+    </html>
+    
