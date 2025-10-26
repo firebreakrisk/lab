@@ -194,6 +194,43 @@
             display: none;
         }
 
+        .btn-upload {
+            background: #38b2ac;
+            color: white;
+        }
+
+        .btn-upload:hover {
+            background: #319795;
+        }
+
+        .btn-upload:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+        }
+
+        .upload-status {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .upload-status.success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .upload-status.error {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .upload-status.loading {
+            background: #bee3f8;
+            color: #2c5282;
+        }
+
         @media (max-width: 480px) {
             .controls {
                 flex-direction: column;
@@ -237,6 +274,10 @@
         <div class="photos-section hidden" id="photosSection">
             <h2>Captured Photos</h2>
             <div class="photo-count" id="photoCount">0 photos captured</div>
+            <button id="uploadBtn" class="btn-upload" onclick="uploadPhotos()" style="width: 100%; margin-bottom: 15px;">
+                📤 Upload Photos to Server
+            </button>
+            <div id="uploadStatus" class="upload-status hidden"></div>
             <div class="photo-grid" id="photoGrid"></div>
         </div>
     </div>
@@ -373,6 +414,60 @@
                 link.download = `house-photo-${index + 1}.jpg`;
                 link.click();
             });
+        }
+
+        // Upload photos to server
+        async function uploadPhotos() {
+            if (photos.length === 0) {
+                alert('No photos to upload!');
+                return;
+            }
+
+            const uploadBtn = document.getElementById('uploadBtn');
+            const uploadStatus = document.getElementById('uploadStatus');
+            
+            // Disable button and show loading status
+            uploadBtn.disabled = true;
+            uploadStatus.className = 'upload-status loading';
+            uploadStatus.textContent = `Uploading ${photos.length} photo(s)...`;
+            uploadStatus.classList.remove('hidden');
+
+            try {
+                // Prepare data to send
+                const formData = new FormData();
+                
+                // Convert each photo to a blob and append to FormData
+                for (let i = 0; i < photos.length; i++) {
+                    const response = await fetch(photos[i].data);
+                    const blob = await response.blob();
+                    formData.append('photos', blob, `house-photo-${i + 1}.jpg`);
+                }
+
+                // Send to server (adjust URL as needed)
+                const serverResponse = await fetch('http://localhost:5000/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (serverResponse.ok) {
+                    const result = await serverResponse.json();
+                    uploadStatus.className = 'upload-status success';
+                    uploadStatus.textContent = `✓ Success! ${result.count} photo(s) uploaded to server.`;
+                    
+                    // Optionally clear photos after successful upload
+                    // photos = [];
+                    // updatePhotosDisplay();
+                } else {
+                    throw new Error('Upload failed');
+                }
+
+            } catch (error) {
+                console.error('Upload error:', error);
+                uploadStatus.className = 'upload-status error';
+                uploadStatus.textContent = '❌ Upload failed. Make sure the server is running.';
+            } finally {
+                uploadBtn.disabled = false;
+            }
         }
     </script>
 </body>
