@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Photo Capture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .camera-section {
+            padding: 20px;
+        }
+
+        #video {
+            width: 100%;
+            border-radius: 15px;
+            background: #000;
+            display: none;
+        }
+
+        #video.active {
+            display: block;
+        }
+
+        #canvas {
+            display: none;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #38a169;
+        }
+
+        .btn-danger {
+            background: #f56565;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #e53e3e;
+        }
+
+        .btn-secondary {
+            background: #718096;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4a5568;
+        }
+
+        .status {
+            text-align: center;
+            padding: 20px;
+            color: #4a5568;
+            font-size: 16px;
+        }
+
+        .photos-section {
+            padding: 20px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .photos-section h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .photo-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-item .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 0, 0, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .photo-count {
+            background: #edf2f7;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .btn-upload {
+            background: #38b2ac;
+            color: white;
+        }
+
+        .btn-upload:hover {
+            background: #319795;
+        }
+
+        .btn-upload:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+        }
+
+        .upload-status {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .upload-status.success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .upload-status.error {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .upload-status.loading {
+            background: #bee3f8;
+            color: #2c5282;
+        }
+
+        @media (max-width: 480px) {
+            .controls {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📸 House Photo Capture</h1>
+            <p>Take photos of your house using your camera</p>
+        </div>
+
+        <div class="camera-section">
+            <video id="video" autoplay playsinline></video>
+            <canvas id="canvas"></canvas>
+            
+            <div id="status" class="status">
+                Click "Start Camera" to begin
+            </div>
+
+            <div class="controls">
+                <button id="startBtn" class="btn-primary" onclick="startCamera()">
+                    📷 Start Camera
+                </button>
+                <button id="captureBtn" class="btn-success hidden" onclick="capturePhoto()">
+                    ✓ Capture Photo
+                </button>
+                <button id="stopBtn" class="btn-danger hidden" onclick="stopCamera()">
+                    ⏹ Stop Camera
+                </button>
+            </div>
+        </div>
+
+        <div class="photos-section hidden" id="photosSection">
+            <h2>Captured Photos</h2>
+            <div class="photo-count" id="photoCount">0 photos captured</div>
+            <button id="uploadBtn" class="btn-upload" onclick="uploadPhotos()" style="width: 100%; margin-bottom: 15px;">
+                📤 Upload Photos to Server
+            </button>
+            <div id="uploadStatus" class="upload-status hidden"></div>
+            <div class="photo-grid" id="photoGrid"></div>
+        </div>
+    </div>
+
+    <script>
+        let stream = null;
+        let photos = [];
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const status = document.getElementById('status');
+        const startBtn = document.getElementById('startBtn');
+        const captureBtn = document.getElementById('captureBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const photosSection = document.getElementById('photosSection');
+        const photoGrid = document.getElementById('photoGrid');
+        const photoCount = document.getElementById('photoCount');
+
+        async function startCamera() {
+            try {
+                // Request camera access with rear camera preference for mobile
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: 'environment', // Use rear camera on mobile
+                        width: { ideal: 1920 },
+                        height: { ideal: 1080 }
+                    }
+                });
+
+                video.srcObject = stream;
+                video.classList.add('active');
+                
+                status.textContent = 'Camera ready! Position your house and click "Capture Photo"';
+                
+                startBtn.classList.add('hidden');
+                captureBtn.classList.remove('hidden');
+                stopBtn.classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Error accessing camera:', error);
+                status.textContent = '❌ Camera access denied. Please allow camera permissions.';
+                alert('Unable to access camera. Please ensure you have granted camera permissions.');
+            }
+        }
+
+        function capturePhoto() {
+            // Set canvas dimensions to match video
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            // Draw the current frame to canvas
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Convert to data URL
+            const imageData = canvas.toDataURL('image/jpeg', 0.9);
+            
+            // Add to photos array
+            photos.push({
+                id: Date.now(),
+                data: imageData,
+                timestamp: new Date().toLocaleString()
+            });
+
+            // Update UI
+            updatePhotosDisplay();
+            
+            // Show brief feedback
+            status.textContent = '✓ Photo captured! Take another or stop camera.';
+            captureBtn.textContent = '✓ Photo Saved!';
+            setTimeout(() => {
+                captureBtn.textContent = '✓ Capture Photo';
+            }, 1000);
+        }
+
+        function stopCamera() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+
+            video.srcObject = null;
+            video.classList.remove('active');
+            
+            startBtn.classList.remove('hidden');
+            captureBtn.classList.add('hidden');
+            stopBtn.classList.add('hidden');
+
+            if (photos.length > 0) {
+                status.textContent = `Camera stopped. ${photos.length} photo(s) captured.`;
+            } else {
+                status.textContent = 'Camera stopped. Click "Start Camera" to begin again.';
+            }
+        }
+
+        function updatePhotosDisplay() {
+            if (photos.length > 0) {
+                photosSection.classList.remove('hidden');
+                photoCount.textContent = `${photos.length} photo${photos.length > 1 ? 's' : ''} captured`;
+                
+                photoGrid.innerHTML = photos.map((photo, index) => `
+                    <div class="photo-item">
+                        <img src="${photo.data}" alt="House photo ${index + 1}">
+                        <button class="delete-btn" onclick="deletePhoto(${photo.id})">×</button>
+                    </div>
+                `).join('');
+            } else {
+                photosSection.classList.add('hidden');
+            }
+        }
+
+        function deletePhoto(id) {
+            if (confirm('Delete this photo?')) {
+                photos = photos.filter(photo => photo.id !== id);
+                updatePhotosDisplay();
+                
+                if (photos.length === 0) {
+                    status.textContent = 'All photos deleted. Start camera to capture more.';
+                }
+            }
+        }
+
+        // Clean up camera when page is closed
+        window.addEventListener('beforeunload', () => {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+        });
+
+        // Optional: Add download functionality
+        function downloadAllPhotos() {
+            photos.forEach((photo, index) => {
+                const link = document.createElement('a');
+                link.href = photo.data;
+                link.download = `house-photo-${index + 1}.jpg`;
+                link.click();
+            });
+        }
+
+        // Upload photos to server
+        async function uploadPhotos() {
+            if (photos.length === 0) {
+                alert('No photos to upload!');
+                return;
+            }
+
+            const uploadBtn = document.getElementById('uploadBtn');
+            const uploadStatus = document.getElementById('uploadStatus');
+            
+            // Disable button and show loading status
+            uploadBtn.disabled = true;
+            uploadStatus.className = 'upload-status loading';
+            uploadStatus.textContent = `Uploading ${photos.length} photo(s)...`;
+            uploadStatus.classList.remove('hidden');
+
+            try {
+                // Prepare data to send
+                const formData = new FormData();
+                
+                // Convert each photo to a blob and append to FormData
+                for (let i = 0; i < photos.length; i++) {
+                    const response = await fetch(photos[i].data);
+                    const blob = await response.blob();
+                    formData.append('photos', blob, `house-photo-${i + 1}.jpg`);
+                }
+
+                // Send to server (adjust URL as needed)
+                const serverResponse = await fetch('http://localhost:5000/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (serverResponse.ok) {
+                    const result = await serverResponse.json();
+                    uploadStatus.className = 'upload-status success';
+                    uploadStatus.textContent = `✓ Success! ${result.count} photo(s) uploaded to server.`;
+                    
+                    // Optionally clear photos after successful upload
+                    // photos = [];
+                    // updatePhotosDisplay();
+                } else {
+                    throw new Error('Upload failed');
+                }
+
+            } catch (error) {
+                console.error('Upload error:', error);
+                uploadStatus.className = 'upload-status error';
+                uploadStatus.textContent = '❌ Upload failed. Make sure the server is running.';
+            } finally {
+                uploadBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
