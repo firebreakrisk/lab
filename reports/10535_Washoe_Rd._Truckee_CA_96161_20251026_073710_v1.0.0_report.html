@@ -1,0 +1,1369 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+        <title>Wildfire Risk Assessment</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <style>
+            :root {
+                --good-color: #71B956;
+                --better-color: #D63B3B;
+                --best-color: #D63B3B;
+                --navy-blue: #1a2b66;
+                --green-grade: #71B956;
+                --orange-grade: #E67234;
+                --red-grade: #D63B3B;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                margin: 0;
+                padding: 20px;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+                background-color: #f5f5f5;
+            }
+
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                background-color: white;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+
+            .header {
+                background-color: var(--navy-blue);
+                color: white;
+            }
+
+            .address-bar {
+                display: flex;
+                justify-content: space-between;
+                padding: 15px 20px;
+                font-size: clamp(0.75rem, 2vw, 0.875rem);
+                background-color: var(--navy-blue);
+                color: white;
+            }
+
+            /* Hero Carousel Styles */
+            .hero-carousel {
+                position: relative;
+                width: 100%;
+                height: 300px;
+                overflow: hidden;
+                background: #000;
+            }
+
+            .hero-carousel-track {
+                display: flex;
+                transition: transform 0.5s ease-in-out;
+                height: 100%;
+            }
+
+            .hero-carousel-slide {
+                min-width: 100%;
+                height: 100%;
+                flex-shrink: 0;
+            }
+
+            .hero-carousel-slide img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+            .hero-carousel-nav {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                background: rgba(255, 255, 255, 0.7);
+                border: none;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2rem;
+                color: var(--navy-blue);
+                z-index: 10;
+                transition: background 0.3s;
+            }
+
+            .hero-carousel-nav:hover {
+                background: rgba(255, 255, 255, 0.9);
+            }
+
+            .hero-carousel-nav.prev {
+                left: 10px;
+            }
+
+            .hero-carousel-nav.next {
+                right: 10px;
+            }
+
+            .hero-carousel-indicators {
+                position: absolute;
+                bottom: 15px;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: 8px;
+                z-index: 10;
+            }
+
+            .hero-carousel-dot {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.5);
+                cursor: pointer;
+                transition: background 0.3s;
+            }
+
+            .hero-carousel-dot.active {
+                background: rgba(255, 255, 255, 1);
+            }
+
+            .hero-carousel-counter {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: rgba(0, 0, 0, 0.6);
+                color: white;
+                padding: 5px 12px;
+                border-radius: 15px;
+                font-size: 0.85rem;
+                font-weight: 600;
+                z-index: 10;
+            }
+
+            /* Back to Top Button */
+            .back-to-top {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                background: var(--navy-blue);
+                color: white;
+                border: 2px solid white;
+                border-radius: 50%;
+                cursor: pointer;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                z-index: 1000;
+                transition: all 0.3s;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            }
+
+            .back-to-top:hover {
+                background: #0d1533;
+                transform: translateY(-3px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            }
+
+            .back-to-top.visible {
+                display: flex;
+            }
+
+            /* Scroll margin for anchor targets */
+            .detail-card {
+                scroll-margin-top: 20px;
+            }
+
+            .content {
+                padding: 20px;
+                background-color: var(--navy-blue);
+                color: white;
+            }
+
+            h1 {
+                font-size: clamp(1.5rem, 5vw, 2rem);
+                margin: 0 0 20px 0;
+            }
+
+            .grade {
+                float: right;
+                font-size: clamp(2rem, 6vw, 2.5rem);
+                font-weight: bold;
+            }
+
+            .section {
+                margin-bottom: 30px;
+            }
+
+            .section-title {
+                font-size: clamp(1rem, 3vw, 1.25rem);
+                font-weight: bold;
+                margin-bottom: 15px;
+                text-transform: uppercase;
+            }
+
+            .category {
+                margin-bottom: 15px;
+                cursor: pointer;
+                transition: opacity 0.2s;
+            }
+
+            .category:hover {
+                opacity: 0.8;
+            }
+
+            .category-header {
+                display: flex;
+                align-items: center;
+                margin-bottom: 5px;
+            }
+
+            .category-name {
+                flex-grow: 1;
+                font-size: clamp(0.75rem, 2vw, 0.875rem);
+                text-transform: uppercase;
+            }
+
+            .category-grade {
+                font-weight: bold;
+                margin-left: 10px;
+                font-size: clamp(0.875rem, 2.5vw, 1rem);
+            }
+
+            .progress-bar {
+                height: 12px;
+                background-color: #ffffff33;
+                border-radius: 6px;
+                overflow: hidden;
+            }
+
+            .progress-fill {
+                height: 100%;
+                border-radius: 6px;
+                transition: width 0.3s ease;
+            }
+
+            .progress-fill.grade-a {
+                background-color: var(--green-grade);
+                width: 90%;
+            }
+
+            .progress-fill.grade-b-plus {
+                background-color: var(--green-grade);
+                width: 85%;
+            }
+
+            .progress-fill.grade-b-minus {
+                background-color: var(--orange-grade);
+                width: 75%;
+            }
+
+            .progress-fill.grade-c {
+                background-color: var(--orange-grade);
+                width: 65%;
+            }
+
+            .progress-fill.grade-d {
+                background-color: var(--red-grade);
+                width: 25%;
+            }
+
+            .icon {
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+                color: white;
+            }
+
+            .powered-by {
+                text-align: right;
+                padding: 10px 20px;
+                font-size: clamp(0.7rem, 2vw, 0.75rem);
+                color: #666;
+            }
+
+            .detail-card {
+                background-color: white;
+                border-radius: 8px;
+                margin-top: 20px;
+                overflow: hidden;
+            }
+
+            .detail-header {
+                background-color: var(--navy-blue);
+                color: white;
+                padding: 20px;
+            }
+
+            .detail-header-top {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                margin-bottom: 15px;
+            }
+
+            .detail-header .icon {
+                font-size: clamp(1.25rem, 4vw, 1.5rem);
+            }
+
+            .detail-header h2 {
+                margin: 0;
+                font-size: clamp(1.25rem, 4vw, 1.5rem);
+                flex-grow: 1;
+            }
+
+            .detail-header .grade {
+                font-size: clamp(1.25rem, 4vw, 1.5rem);
+                font-weight: bold;
+            }
+
+            .detail-progress {
+                height: 12px;
+                background-color: #ffffff33;
+                border-radius: 6px;
+                overflow: hidden;
+                margin-left: 39px;
+            }
+
+            .detail-description {
+                background-color: #1a3163;
+                color: white;
+                padding: 20px;
+                font-size: clamp(0.875rem, 2.5vw, 1rem);
+                line-height: 1.5;
+            }
+
+            .improvement-section {
+                padding: 20px;
+            }
+
+            .improvement-section h3 {
+                color: var(--navy-blue);
+                margin: 0 0 20px 0;
+                font-size: clamp(1rem, 3vw, 1.125rem);
+                text-transform: uppercase;
+            }
+
+            .improvement-level {
+                margin-bottom: 20px;
+                display: flex;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .status-icon {
+                width: 32px;
+                height: 32px;
+                flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+            }
+
+            .status-icon.good {
+                color: #CD7F32; /* Bronze */
+            }
+
+            .status-icon.better {
+                color: #C0C0C0; /* Silver */
+            }
+
+            .status-icon.best {
+                color: #FFD700; /* Gold */
+            }
+
+            .improvement-content h4 {
+                color: var(--navy-blue);
+                margin: 0 0 8px 0;
+                font-size: clamp(0.875rem, 2.5vw, 1rem);
+                text-transform: uppercase;
+            }
+
+            .improvement-content p {
+                margin: 0;
+                color: #333;
+                line-height: 1.5;
+                font-size: clamp(0.875rem, 2.5vw, 1rem);
+            }
+
+            .images-section {
+                padding: 0 20px 20px;
+            }
+
+            .images-section h3 {
+                color: var(--navy-blue);
+                margin: 0 0 15px 0;
+                font-size: clamp(1rem, 3vw, 1.125rem);
+                text-transform: uppercase;
+            }
+
+            /* Category Carousel Styles */
+            .category-carousel {
+                position: relative;
+                width: 100%;
+                overflow: hidden;
+                border-radius: 8px;
+                background: #000;
+                margin-top: 10px;
+            }
+
+            .category-carousel-counter {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: rgba(0, 0, 0, 0.6);
+                color: white;
+                padding: 5px 12px;
+                border-radius: 15px;
+                font-size: 0.85rem;
+                font-weight: 600;
+                z-index: 10;
+            }
+
+            .category-carousel-track {
+                display: flex;
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .category-carousel-slide {
+                min-width: 100%;
+                flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .category-carousel-slide img {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+
+            .category-carousel-nav {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                background: rgba(255, 255, 255, 0.8);
+                border: none;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.9rem;
+                color: var(--navy-blue);
+                z-index: 5;
+                transition: background 0.2s;
+            }
+
+            .category-carousel-nav:hover {
+                background: rgba(255, 255, 255, 1);
+            }
+
+            .category-carousel-nav.prev {
+                left: 8px;
+            }
+
+            .category-carousel-nav.next {
+                right: 8px;
+            }
+
+            .category-carousel-indicators {
+                position: absolute;
+                bottom: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: 6px;
+                z-index: 5;
+            }
+
+            .category-carousel-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.5);
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+
+            .category-carousel-dot.active {
+                background: rgba(255, 255, 255, 1);
+            }
+
+            .property-image {
+                width: 100%;
+                border-radius: 8px;
+                overflow: hidden;
+                margin-bottom: 15px;
+            }
+
+            .property-image img {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+
+            @media (max-width: 600px) {
+                body {
+                    padding: 10px;
+                }
+
+                .content {
+                    padding: 15px;
+                }
+
+                .address-bar {
+                    flex-direction: column;
+                    gap: 5px;
+                    text-align: center;
+                }
+
+                .hero-carousel {
+                    height: 200px;
+                }
+
+                .hero-carousel-nav {
+                    width: 30px;
+                    height: 30px;
+                    font-size: 1rem;
+                }
+
+                .category-header {
+                    font-size: 0.8rem;
+                }
+
+                .improvement-level {
+                    gap: 10px;
+                }
+            }
+
+            @media print {
+                body {
+                    background-color: white;
+                    padding: 0;
+                }
+
+                .detail-card {
+                    page-break-inside: avoid;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="address-bar">
+                    <span class="location">10535 Washoe Rd., Truckee CA, 96161</span>
+                    <span class="date">Oct 26, 2025</span>
+                </div>
+    
+            <div class="hero-carousel" id="heroCarousel">
+                <div class="hero-carousel-counter">2 of 2 images analyzed</div>
+                <div class="hero-carousel-track" id="heroTrack">
+        
+                    <div class="hero-carousel-slide">
+                        <img src="tests/test_data/captured_photos/10535 Washoe Rd., Truckee CA, 96161/20140271_12_0.jpg" alt="Property view 1">
+                    </div>
+            
+                    <div class="hero-carousel-slide">
+                        <img src="tests/test_data/captured_photos/10535 Washoe Rd., Truckee CA, 96161/a038de135ae9a6cadc846511297571d0-cc_ft_1536.jpg" alt="Property view 2">
+                    </div>
+            
+                </div>
+        
+                <button class="hero-carousel-nav prev" onclick="heroCarouselPrev()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="hero-carousel-nav next" onclick="heroCarouselNext()">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="hero-carousel-indicators" id="heroIndicators">
+                                <div class="hero-carousel-dot active" onclick="heroCarouselGoTo(0)"></div>
+                    <div class="hero-carousel-dot " onclick="heroCarouselGoTo(1)"></div>
+
+                </div>
+            
+            </div>
+        
+            </div>
+            <div class="content">
+                <h1>Ready for Wildfire: <span class="grade">B-</span></h1>
+    
+                <div class="section">
+                    <div class="section-title">HOME HARDENING</div>
+        
+                    <div class="category" onclick="scrollToDetail('underDeckRoof')">
+                        <div class="category-header">
+                            <i class="icon fas fa-circle"></i>
+                            <span class="category-name">UNDERDECKROOF</span>
+                            <span class="category-grade">B-</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill grade-b-minus"></div>
+                        </div>
+                    </div>
+            
+                    <div class="category" onclick="scrollToDetail('siding')">
+                        <div class="category-header">
+                            <i class="icon fas fa-building"></i>
+                            <span class="category-name">SIDING</span>
+                            <span class="category-grade">B-</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill grade-b-minus"></div>
+                        </div>
+                    </div>
+            
+                </div>
+        
+                <div class="section">
+                    <div class="section-title">EMBER ZONE</div>
+        
+                    <div class="category" onclick="scrollToDetail('fiveFootZone')">
+                        <div class="category-header">
+                            <i class="icon fas fa-seedling"></i>
+                            <span class="category-name">PLANTS (0-5 FT)</span>
+                            <span class="category-grade">B+</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill grade-b-plus"></div>
+                        </div>
+                    </div>
+            
+                    <div class="category" onclick="scrollToDetail('combustibleFurniture')">
+                        <div class="category-header">
+                            <i class="icon fas fa-circle"></i>
+                            <span class="category-name">FURNITURE</span>
+                            <span class="category-grade">B+</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill grade-b-plus"></div>
+                        </div>
+                    </div>
+            
+                    <div class="category" onclick="scrollToDetail('groundCover')">
+                        <div class="category-header">
+                            <i class="icon fas fa-circle"></i>
+                            <span class="category-name">GROUNDCOVER</span>
+                            <span class="category-grade">B+</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill grade-b-plus"></div>
+                        </div>
+                    </div>
+            
+                    <div class="category" onclick="scrollToDetail('thirtyFootZone')">
+                        <div class="category-header">
+                            <i class="icon fas fa-tree"></i>
+                            <span class="category-name">PLANTS (5-30 FT)</span>
+                            <span class="category-grade">B-</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill grade-b-minus"></div>
+                        </div>
+                    </div>
+            
+                    <div class="category" onclick="scrollToDetail('treeSpacing')">
+                        <div class="category-header">
+                            <i class="icon fas fa-tree"></i>
+                            <span class="category-name">TREES</span>
+                            <span class="category-grade">B-</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill grade-b-minus"></div>
+                        </div>
+                    </div>
+            
+                </div>
+        
+            </div>
+            <div class="powered-by">powered by FireBreak Risk Analysis</div>
+    
+            <div class="detail-card" id="detail-underDeckRoof">
+                <div class="detail-header">
+                    <div class="detail-header-top">
+                        <i class="icon fas fa-circle"></i>
+                        <h2>UNDERDECKROOF</h2>
+                        <span class="grade">B-</span>
+                    </div>
+                    <div class="detail-progress">
+                        <div class="progress-fill grade-b-minus"></div>
+                    </div>
+                </div>
+
+                <div class="detail-description">
+                    <strong>Risk Detected:</strong> When roof material has an airspace under the roof covering or over a combustible deck, heat and embers can be trapped in the space created.
+                    <br><br>
+                    <strong>Detection Frequency:</strong> Found in 1 of 2 images analyzed.
+                    <br><br>
+                    <strong>Assessment:</strong> Score 2 (Grade: B-)
+                </div>
+        
+                <div class="images-section">
+                    <div class="category-carousel" id="carousel-underDeckRoof">
+                        <div class="category-carousel-counter">Detected in 1 image</div>
+                        <div class="category-carousel-track">
+            
+                            <div class="category-carousel-slide">
+                                <img src="tests/test_data/captured_photos/10535 Washoe Rd., Truckee CA, 96161/a038de135ae9a6cadc846511297571d0-cc_ft_1536.jpg" alt="Property image 2">
+                            </div>
+                
+                        </div>
+            
+                    </div>
+                </div>
+            
+                <div class="improvement-section">
+                    <h3>HOW TO IMPROVE</h3>
+        
+                    <div class="improvement-level">
+                        <div class="status-icon good">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>GOOD</h4>
+                            <p>The space is kept clear of combustibles and flammable vegetation.</p>
+                        </div>
+                    </div>
+            
+                    <div class="improvement-level">
+                        <div class="status-icon better">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>BETTER</h4>
+                            <p>Decking is made from non-combustible material and the home's siding is also heat resistant.</p>
+                        </div>
+                    </div>
+            
+                    <div class="improvement-level">
+                        <div class="status-icon best">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>BEST</h4>
+                            <p>The under-deck roof has a 72lb cap or fire-retardant treated plywood rolled under the entirety to be used as sheathing and it is blocked with non-combustible materials at the eaves, ridges and hips.</p>
+                        </div>
+                    </div>
+            
+                </div>
+            </div>
+        
+            <div class="detail-card" id="detail-siding">
+                <div class="detail-header">
+                    <div class="detail-header-top">
+                        <i class="icon fas fa-building"></i>
+                        <h2>SIDING</h2>
+                        <span class="grade">B-</span>
+                    </div>
+                    <div class="detail-progress">
+                        <div class="progress-fill grade-b-minus"></div>
+                    </div>
+                </div>
+
+                <div class="detail-description">
+                    <strong>Risk Detected:</strong> The spread of flame through walls can be slow, but surface flame spread on combustible siding occurs quickly. This exposes windows and eaves to direct flame contact and can begin the cascade of damage for a home.
+                    <br><br>
+                    <strong>Detection Frequency:</strong> Found in 1 of 2 images analyzed.
+                    <br><br>
+                    <strong>Assessment:</strong> Score 2 (Grade: B-)
+                </div>
+        
+                <div class="images-section">
+                    <div class="category-carousel" id="carousel-siding">
+                        <div class="category-carousel-counter">Detected in 1 image</div>
+                        <div class="category-carousel-track">
+            
+                            <div class="category-carousel-slide">
+                                <img src="tests/test_data/captured_photos/10535 Washoe Rd., Truckee CA, 96161/a038de135ae9a6cadc846511297571d0-cc_ft_1536.jpg" alt="Property image 2">
+                            </div>
+                
+                        </div>
+            
+                    </div>
+                </div>
+            
+                <div class="improvement-section">
+                    <h3>HOW TO IMPROVE</h3>
+        
+                    <div class="improvement-level">
+                        <div class="status-icon good">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>GOOD</h4>
+                            <p>Exterior walls are coated in a fresh coat of fire-resistant paint.</p>
+                        </div>
+                    </div>
+            
+                    <div class="improvement-level">
+                        <div class="status-icon better">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>BETTER</h4>
+                            <p>Unpainted wood is treated for fire resistance.</p>
+                        </div>
+                    </div>
+            
+                    <div class="improvement-level">
+                        <div class="status-icon best">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>BEST</h4>
+                            <p>Exterior walls are clad with non-combustible building materials.</p>
+                        </div>
+                    </div>
+            
+                </div>
+            </div>
+        
+            <div class="detail-card" id="detail-fiveFootZone">
+                <div class="detail-header">
+                    <div class="detail-header-top">
+                        <i class="icon fas fa-seedling"></i>
+                        <h2>PLANTS (0-5 FT)</h2>
+                        <span class="grade">B+</span>
+                    </div>
+                    <div class="detail-progress">
+                        <div class="progress-fill grade-b-plus"></div>
+                    </div>
+                </div>
+
+                <div class="detail-description">
+                    <strong>Risk Detected:</strong> The first 5' from your home is the most important and the most vulnerable to embers. Angled exterior walls, also known as re-entrant corners, should be given additional space to prevent extreme heat buildup.
+                    <br><br>
+                    <strong>Detection Frequency:</strong> Found in 1 of 2 images analyzed.
+                    <br><br>
+                    <strong>Assessment:</strong> Score 1 (Grade: B+)
+                </div>
+        
+                <div class="images-section">
+                    <div class="category-carousel" id="carousel-fiveFootZone">
+                        <div class="category-carousel-counter">Detected in 1 image</div>
+                        <div class="category-carousel-track">
+            
+                            <div class="category-carousel-slide">
+                                <img src="tests/test_data/captured_photos/10535 Washoe Rd., Truckee CA, 96161/20140271_12_0.jpg" alt="Property image 1">
+                            </div>
+                
+                        </div>
+            
+                    </div>
+                </div>
+            
+                <div class="improvement-section">
+                    <h3>HOW TO IMPROVE</h3>
+        
+                    <div class="improvement-level">
+                        <div class="status-icon better">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>BETTER</h4>
+                            <p>The amount of vegetation around the home is reduced by the increase of space between the vegetation with non-combustible materials or having placed the plants into individual non-combustible pots/planters.</p>
+                        </div>
+                    </div>
+            
+                    <div class="improvement-level">
+                        <div class="status-icon best">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>BEST</h4>
+                            <p>All vegetation and items that could ignite are removed from the area around the home as well as under decks, windows, balconies and stairs.</p>
+                        </div>
+                    </div>
+            
+                </div>
+            </div>
+        
+            <div class="detail-card" id="detail-combustibleFurniture">
+                <div class="detail-header">
+                    <div class="detail-header-top">
+                        <i class="icon fas fa-circle"></i>
+                        <h2>FURNITURE</h2>
+                        <span class="grade">B+</span>
+                    </div>
+                    <div class="detail-progress">
+                        <div class="progress-fill grade-b-plus"></div>
+                    </div>
+                </div>
+
+                <div class="detail-description">
+                    <strong>Risk Detected:</strong> Small combustibles like door mats, furniture, furniture cushions and covers, and planter boxes are often where embers can smolder.
+                    <br><br>
+                    <strong>Detection Frequency:</strong> Found in 1 of 2 images analyzed.
+                    <br><br>
+                    <strong>Assessment:</strong> Score 1 (Grade: B+)
+                </div>
+        
+                <div class="images-section">
+                    <div class="category-carousel" id="carousel-combustibleFurniture">
+                        <div class="category-carousel-counter">Detected in 1 image</div>
+                        <div class="category-carousel-track">
+            
+                            <div class="category-carousel-slide">
+                                <img src="tests/test_data/captured_photos/10535 Washoe Rd., Truckee CA, 96161/20140271_12_0.jpg" alt="Property image 1">
+                            </div>
+                
+                        </div>
+            
+                    </div>
+                </div>
+            
+                <div class="improvement-section">
+                    <h3>HOW TO IMPROVE</h3>
+        
+                    <div class="improvement-level">
+                        <div class="status-icon better">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>BETTER</h4>
+                            <p>Combustible items (outdoor furniture, planters, etc.) on top of decks and balconies are limited and kept at least 5' away from the home.</p>
+                        </div>
+                    </div>
+            
+                    <div class="improvement-level">
+                        <div class="status-icon best">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>BEST</h4>
+                            <p>All outdoor furniture is removed from within 30' of the home or replaced with fire-safe materials.</p>
+                        </div>
+                    </div>
+            
+                </div>
+            </div>
+        
+            <div class="detail-card" id="detail-groundCover">
+                <div class="detail-header">
+                    <div class="detail-header-top">
+                        <i class="icon fas fa-circle"></i>
+                        <h2>GROUNDCOVER</h2>
+                        <span class="grade">B+</span>
+                    </div>
+                    <div class="detail-progress">
+                        <div class="progress-fill grade-b-plus"></div>
+                    </div>
+                </div>
+
+                <div class="detail-description">
+                    <strong>Risk Detected:</strong> Using fire-resistant materials for walkways, patios, retaining walls, planter edging, driveways or planter bed mulch can help create an effective fuel break.
+                    <br><br>
+                    <strong>Detection Frequency:</strong> Found in 1 of 2 images analyzed.
+                    <br><br>
+                    <strong>Assessment:</strong> Score 1 (Grade: B+)
+                </div>
+        
+                <div class="images-section">
+                    <div class="category-carousel" id="carousel-groundCover">
+                        <div class="category-carousel-counter">Detected in 1 image</div>
+                        <div class="category-carousel-track">
+            
+                            <div class="category-carousel-slide">
+                                <img src="tests/test_data/captured_photos/10535 Washoe Rd., Truckee CA, 96161/20140271_12_0.jpg" alt="Property image 1">
+                            </div>
+                
+                        </div>
+            
+                    </div>
+                </div>
+            
+                <div class="improvement-section">
+                    <h3>HOW TO IMPROVE</h3>
+        
+                    <div class="improvement-level">
+                        <div class="status-icon better">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>BETTER</h4>
+                            <p>All combustible mulch is replaced with boulders, rocks, gravel, or stone in pathways as a ground cover for bare spaces to create an effective firebreak.</p>
+                        </div>
+                    </div>
+            
+                    <div class="improvement-level">
+                        <div class="status-icon best">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>BEST</h4>
+                            <p>30' around the home is clear of combustible mulch and replaced with non-combustible materials.</p>
+                        </div>
+                    </div>
+            
+                </div>
+            </div>
+        
+            <div class="detail-card" id="detail-thirtyFootZone">
+                <div class="detail-header">
+                    <div class="detail-header-top">
+                        <i class="icon fas fa-tree"></i>
+                        <h2>PLANTS (5-30 FT)</h2>
+                        <span class="grade">B-</span>
+                    </div>
+                    <div class="detail-progress">
+                        <div class="progress-fill grade-b-minus"></div>
+                    </div>
+                </div>
+
+                <div class="detail-description">
+                    <strong>Risk Detected:</strong> The 30' space around your home can be used as a buffer for your property to reduce potential fuel for fire.
+                    <br><br>
+                    <strong>Detection Frequency:</strong> Found in 1 of 2 images analyzed.
+                    <br><br>
+                    <strong>Assessment:</strong> Score 2 (Grade: B-)
+                </div>
+        
+                <div class="images-section">
+                    <div class="category-carousel" id="carousel-thirtyFootZone">
+                        <div class="category-carousel-counter">Detected in 1 image</div>
+                        <div class="category-carousel-track">
+            
+                            <div class="category-carousel-slide">
+                                <img src="tests/test_data/captured_photos/10535 Washoe Rd., Truckee CA, 96161/a038de135ae9a6cadc846511297571d0-cc_ft_1536.jpg" alt="Property image 2">
+                            </div>
+                
+                        </div>
+            
+                    </div>
+                </div>
+            
+                <div class="improvement-section">
+                    <h3>HOW TO IMPROVE</h3>
+        
+                    <div class="improvement-level">
+                        <div class="status-icon good">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>GOOD</h4>
+                            <p>The amount of vegetation around the home is reduced by the increase of space between the vegetation with non-combustible materials or having placed the plants into individual non-combustible pots/planters.</p>
+                        </div>
+                    </div>
+            
+                    <div class="improvement-level">
+                        <div class="status-icon better">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>BETTER</h4>
+                            <p>All vegetation and items that could ignite are removed from the area around the home as well as under decks, windows, balconies and stairs.</p>
+                        </div>
+                    </div>
+            
+                    <div class="improvement-level">
+                        <div class="status-icon best">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>BEST</h4>
+                            <p>Hazardous vegetation is replaced with less flammable plants. An irrigated, well-maintained yard is more effective than a dense collection of flammable shrubs.</p>
+                        </div>
+                    </div>
+            
+                </div>
+            </div>
+        
+            <div class="detail-card" id="detail-treeSpacing">
+                <div class="detail-header">
+                    <div class="detail-header-top">
+                        <i class="icon fas fa-tree"></i>
+                        <h2>TREES</h2>
+                        <span class="grade">B-</span>
+                    </div>
+                    <div class="detail-progress">
+                        <div class="progress-fill grade-b-minus"></div>
+                    </div>
+                </div>
+
+                <div class="detail-description">
+                    <strong>Risk Detected:</strong> Trees can ignite neighboring trees if planted too closely and tree-to-tree ignitions can create a pathway for wildfire to reach the structure even if mitigation actions are taken to mitigate ground spread. Windy areas and structures located on a slope may require greater distances.
+                    <br><br>
+                    <strong>Detection Frequency:</strong> Found in 1 of 2 images analyzed.
+                    <br><br>
+                    <strong>Assessment:</strong> Score 2 (Grade: B-)
+                </div>
+        
+                <div class="images-section">
+                    <div class="category-carousel" id="carousel-treeSpacing">
+                        <div class="category-carousel-counter">Detected in 1 image</div>
+                        <div class="category-carousel-track">
+            
+                            <div class="category-carousel-slide">
+                                <img src="tests/test_data/captured_photos/10535 Washoe Rd., Truckee CA, 96161/a038de135ae9a6cadc846511297571d0-cc_ft_1536.jpg" alt="Property image 2">
+                            </div>
+                
+                        </div>
+            
+                    </div>
+                </div>
+            
+                <div class="improvement-section">
+                    <h3>HOW TO IMPROVE</h3>
+        
+                    <div class="improvement-level">
+                        <div class="status-icon good">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>GOOD</h4>
+                            <p>Trees are spaced at least 10' apart to prevent fire spread.</p>
+                        </div>
+                    </div>
+            
+                    <div class="improvement-level">
+                        <div class="status-icon better">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>BETTER</h4>
+                            <p>Trees are spaced at least 20' apart to prevent fire spread.</p>
+                        </div>
+                    </div>
+            
+                    <div class="improvement-level">
+                        <div class="status-icon best">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="improvement-content">
+                            <h4>BEST</h4>
+                            <p>Trees are spaced at least 30' apart to prevent fire spread.</p>
+                        </div>
+                    </div>
+            
+                </div>
+            </div>
+        
+        </div>
+
+        <!-- Back to Top Button -->
+        <button class="back-to-top" id="backToTop" onclick="scrollToTop()">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+
+        <script>
+            // Hero Carousel JavaScript
+            let heroCurrentSlide = 0;
+            let heroAutoAdvanceInterval = null;
+            const heroTotalSlides = document.querySelectorAll('.hero-carousel-slide').length;
+
+            function heroCarouselGoTo(index) {
+                if (heroTotalSlides === 0) return;
+
+                heroCurrentSlide = index;
+                const track = document.getElementById('heroTrack');
+                if (track) {
+                    track.style.transform = `translateX(-${heroCurrentSlide * 100}%)`;
+                }
+
+                // Update indicators
+                const indicators = document.querySelectorAll('.hero-carousel-dot');
+                indicators.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === heroCurrentSlide);
+                });
+
+                // Reset auto-advance timer
+                resetHeroAutoAdvance();
+            }
+
+            function heroCarouselNext() {
+                heroCurrentSlide = (heroCurrentSlide + 1) % heroTotalSlides;
+                heroCarouselGoTo(heroCurrentSlide);
+            }
+
+            function heroCarouselPrev() {
+                heroCurrentSlide = (heroCurrentSlide - 1 + heroTotalSlides) % heroTotalSlides;
+                heroCarouselGoTo(heroCurrentSlide);
+            }
+
+            function startHeroAutoAdvance() {
+                if (heroTotalSlides > 1) {
+                    heroAutoAdvanceInterval = setInterval(() => {
+                        heroCarouselNext();
+                    }, 2000); // 2 seconds as specified
+                }
+            }
+
+            function resetHeroAutoAdvance() {
+                if (heroAutoAdvanceInterval) {
+                    clearInterval(heroAutoAdvanceInterval);
+                }
+                startHeroAutoAdvance();
+            }
+
+            function stopHeroAutoAdvance() {
+                if (heroAutoAdvanceInterval) {
+                    clearInterval(heroAutoAdvanceInterval);
+                    heroAutoAdvanceInterval = null;
+                }
+            }
+
+            // Start auto-advance on page load
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', startHeroAutoAdvance);
+            } else {
+                startHeroAutoAdvance();
+            }
+
+            // Pause auto-advance when user hovers over carousel
+            const heroCarousel = document.getElementById('heroCarousel');
+            if (heroCarousel) {
+                heroCarousel.addEventListener('mouseenter', stopHeroAutoAdvance);
+                heroCarousel.addEventListener('mouseleave', startHeroAutoAdvance);
+            }
+
+            // Touch support for mobile
+            let heroTouchStartX = 0;
+            let heroTouchEndX = 0;
+
+            if (heroCarousel) {
+                heroCarousel.addEventListener('touchstart', (e) => {
+                    heroTouchStartX = e.changedTouches[0].screenX;
+                    stopHeroAutoAdvance();
+                });
+
+                heroCarousel.addEventListener('touchend', (e) => {
+                    heroTouchEndX = e.changedTouches[0].screenX;
+                    handleHeroSwipe();
+                    startHeroAutoAdvance();
+                });
+            }
+
+            function handleHeroSwipe() {
+                const swipeThreshold = 50;
+                const diff = heroTouchStartX - heroTouchEndX;
+
+                if (Math.abs(diff) > swipeThreshold) {
+                    if (diff > 0) {
+                        heroCarouselNext();
+                    } else {
+                        heroCarouselPrev();
+                    }
+                }
+            }
+
+            // Category Carousel JavaScript
+            const categoryCarouselStates = {};
+
+            function initCategoryCarousel(carouselId) {
+                if (!categoryCarouselStates[carouselId]) {
+                    const carousel = document.getElementById(carouselId);
+                    const slides = carousel ? carousel.querySelectorAll('.category-carousel-slide') : [];
+                    categoryCarouselStates[carouselId] = {
+                        currentSlide: 0,
+                        totalSlides: slides.length
+                    };
+                }
+            }
+
+            function categoryCarouselNav(carouselId, direction) {
+                initCategoryCarousel(carouselId);
+                const state = categoryCarouselStates[carouselId];
+
+                state.currentSlide = (state.currentSlide + direction + state.totalSlides) % state.totalSlides;
+
+                const carousel = document.getElementById(carouselId);
+                if (!carousel) return;
+
+                const track = carousel.querySelector('.category-carousel-track');
+                if (track) {
+                    track.style.transform = `translateX(-${state.currentSlide * 100}%)`;
+                }
+
+                // Update indicators
+                const indicators = carousel.querySelectorAll('.category-carousel-dot');
+                indicators.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === state.currentSlide);
+                });
+            }
+
+            function categoryCarouselGoTo(carouselId, slideIndex) {
+                initCategoryCarousel(carouselId);
+                const state = categoryCarouselStates[carouselId];
+
+                state.currentSlide = slideIndex;
+
+                const carousel = document.getElementById(carouselId);
+                if (!carousel) return;
+
+                const track = carousel.querySelector('.category-carousel-track');
+                if (track) {
+                    track.style.transform = `translateX(-${state.currentSlide * 100}%)`;
+                }
+
+                // Update indicators
+                const indicators = carousel.querySelectorAll('.category-carousel-dot');
+                indicators.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === state.currentSlide);
+                });
+            }
+
+            // Initialize all category carousels on page load
+            function initAllCategoryCarousels() {
+                document.querySelectorAll('.category-carousel').forEach(carousel => {
+                    initCategoryCarousel(carousel.id);
+                });
+            }
+
+            // Anchor Navigation and Back to Top
+            function scrollToDetail(categoryKey) {
+                const detailCard = document.getElementById('detail-' + categoryKey);
+                if (detailCard) {
+                    detailCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+
+            function scrollToTop() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Show/hide back to top button based on scroll position
+            function handleScroll() {
+                const backToTop = document.getElementById('backToTop');
+                if (backToTop) {
+                    if (window.scrollY > 300) {
+                        backToTop.classList.add('visible');
+                    } else {
+                        backToTop.classList.remove('visible');
+                    }
+                }
+            }
+
+            // Listen for scroll events
+            window.addEventListener('scroll', handleScroll);
+
+            // Initial setup on page load
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => {
+                    handleScroll();
+                    initAllCategoryCarousels();
+                });
+            } else {
+                handleScroll();
+                initAllCategoryCarousels();
+            }
+        </script>
+    </body>
+    </html>
+    
